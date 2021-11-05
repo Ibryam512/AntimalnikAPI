@@ -14,6 +14,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using AntimalnikAPI.Data;
+
 
 namespace AntimalnikAPI
 {
@@ -33,6 +36,10 @@ namespace AntimalnikAPI
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
             services.AddControllers();
+
+            services.AddDbContext<ApplicationDbContext>(opt =>
+                                               opt.UseInMemoryDatabase("Antimalnik"));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AntimalnikAPI", Version = "v1" });
