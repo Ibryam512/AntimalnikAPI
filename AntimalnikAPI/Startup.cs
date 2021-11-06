@@ -37,8 +37,9 @@ namespace AntimalnikAPI
 
             services.AddControllers();
 
-            services.AddDbContext<ApplicationDbContext>(opt =>
-                                               opt.UseInMemoryDatabase("Antimalnik"));
+            services.AddDbContext<ApplicationDbContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen(c =>
             {
