@@ -26,12 +26,36 @@ namespace AntimalnikAPI.Controllers
             return new JsonResult(posts);
         }
 
+        [HttpGet("{title}")]
+        public IActionResult Post(string title)
+        {
+            var post = this._context.Posts.SingleOrDefault(x => x.Title == title);
+            return new JsonResult(post);
+        }
+
         [HttpPost]
         public IActionResult AddPost(Post post)
         {
             this._context.Posts.Add(post);
             this._context.SaveChanges();
-            return new JsonResult($"Post with title {post.Title} added successfully");
+            return new JsonResult($"Post with title {post.Title} added successfully.");
+        }
+
+        [HttpPut]
+        public IActionResult EditPost(Post post)
+        {
+            this._context.Posts.Update(post);
+            this._context.SaveChanges();
+            return new JsonResult($"Post with title {post.Title} updated successfully.");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePost(string id)
+        {
+            var post = this._context.Posts.SingleOrDefault(x => x.Id == id);
+            this._context.Posts.Remove(post);
+            this._context.SaveChanges();
+            return new JsonResult("The post is deleted successfully.");
         }
     }
 }
