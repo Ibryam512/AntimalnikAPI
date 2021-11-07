@@ -1,3 +1,5 @@
+using AntimalnikAPI.Services;
+using AntimalnikAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -45,6 +47,8 @@ namespace AntimalnikAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AntimalnikAPI", Version = "v1" });
             });
+
+            services.AddScoped<IPostService, PostService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

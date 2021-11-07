@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AntimalnikAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,49 +13,45 @@ namespace AntimalnikAPI.Controllers
     [Route("api/posts")]
     public class PostController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPostService _service;
 
-        public PostController(ApplicationDbContext context)
+        public PostController(IPostService service)
         {
-            this._context = context;
+            this._service = service;
         }
 
         [HttpGet]
         public IActionResult GetPosts()
         {
-            var posts = this._context.Posts.ToList();
+            var posts = this._service.GetPosts().Result;
             return new JsonResult(posts);
         }
 
-        [HttpGet("{title}")]
-        public IActionResult Post(string title)
+        [HttpGet("{id}")]
+        public IActionResult Post(string id)
         {
-            var post = this._context.Posts.SingleOrDefault(x => x.Title == title);
+            var post = this._service.GetPost(id).Result;
             return new JsonResult(post);
         }
 
         [HttpPost]
         public IActionResult AddPost(Post post)
         {
-            this._context.Posts.Add(post);
-            this._context.SaveChanges();
+            this._service.AddPost(post);
             return new JsonResult($"Post with title {post.Title} added successfully.");
         }
 
         [HttpPut]
         public IActionResult EditPost(Post post)
         {
-            this._context.Posts.Update(post);
-            this._context.SaveChanges();
+            this._service.EditPost(post);
             return new JsonResult($"Post with title {post.Title} updated successfully.");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeletePost(string id)
         {
-            var post = this._context.Posts.SingleOrDefault(x => x.Id == id);
-            this._context.Posts.Remove(post);
-            this._context.SaveChanges();
+            this._service.DeletePost(id);
             return new JsonResult("The post is deleted successfully.");
         }
     }
