@@ -8,7 +8,7 @@ namespace AntimalnikAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ApplicationUser",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -29,7 +29,7 @@ namespace AntimalnikAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,9 +50,9 @@ namespace AntimalnikAPI.Migrations
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_ApplicationUser_UserId",
+                        name: "FK_Posts_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "ApplicationUser",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -69,7 +69,7 @@ namespace AntimalnikAPI.Migrations
                 name: "Posts");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUser");
+                name: "Users");
         }
     }
 }

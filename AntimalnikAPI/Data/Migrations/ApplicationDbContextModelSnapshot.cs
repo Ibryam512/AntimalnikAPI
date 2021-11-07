@@ -68,7 +68,7 @@ namespace AntimalnikAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AntimalnikAPI.Models.Post", b =>

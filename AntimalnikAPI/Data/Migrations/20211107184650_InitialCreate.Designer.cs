@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AntimalnikAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211106143126_InitialCreate")]
+    [Migration("20211107184650_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,7 @@ namespace AntimalnikAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AntimalnikAPI.Models.Post", b =>
