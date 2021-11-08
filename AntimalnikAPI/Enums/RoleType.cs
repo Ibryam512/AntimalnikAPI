@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace AntimalnikAPI.Enums
 {
-    public enum PostType
+    public enum RoleType
     {
-        Ad = 0,
-        LostThing = 1
+        User = 0,
+        Student = 1,
+        Teacher = 2,
+        Principal = 4,
+        Admin = 8
     }
 }
