@@ -42,5 +42,8 @@ namespace AntimalnikAPI.Services
             this._context.Users.Remove(user);
             await this._context.SaveChangesAsync();
         }
+
+        public Task<ApplicationUser> Login(ApplicationUser user) => this._context.Users.SingleOrDefaultAsync(x => x.UserName == user.UserName && x.Password == user.Password);
+
     }
 }

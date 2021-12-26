@@ -14,5 +14,6 @@ namespace AntimalnikAPI.Services.Interfaces
         Task AddUser(ApplicationUser user);
         Task EditUser(ApplicationUser user);
         Task DeleteUser(string userName);
+        Task<ApplicationUser> Login(ApplicationUser user);
     }
 }

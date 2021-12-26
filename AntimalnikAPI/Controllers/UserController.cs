@@ -62,5 +62,16 @@ namespace AntimalnikAPI.Controllers
             this._service.DeleteUser(userName);
             return new JsonResult("The user was deleted successfully.");
         }
+
+        [HttpPost("/login")]
+        public IActionResult Login(ApplicationUser user)
+        {
+            var logged = this._service.Login(user);
+            if (logged == null)
+            {
+                return Ok(new { status = 401, isSuccess = false, message = "Грешно потребителско име или парола", });
+            }
+            return Ok(new { status = 200, isSuccess = true, message = "Потребутелят влезе успешно", UserDetails = logged });
+        }
     }
 }
