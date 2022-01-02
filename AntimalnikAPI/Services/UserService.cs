@@ -1,6 +1,8 @@
 ﻿using AntimalnikAPI.Data;
 using AntimalnikAPI.Models;
+using AntimalnikAPI.ViewModels;
 using AntimalnikAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,14 @@ namespace AntimalnikAPI.Services
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             this._context = context;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
         }
 
         public Task<List<ApplicationUser>> GetUsers() => this._context.Users.ToListAsync();
@@ -24,10 +30,11 @@ namespace AntimalnikAPI.Services
 
         public List<Post> GetUserPosts(string userName) => GetUser(userName).Result.Posts.ToList();
 
-        public async Task AddUser(ApplicationUser user)
+        public bool AddUser(ApplicationUser user, string password)
         {
-            this._context.Users.Add(user);
-            await this._context.SaveChangesAsync();
+            var result = _userManager.CreateAsync(user, password).Result;
+            if (result.Succeeded) return true;
+            return false;
         }
 
         public async Task EditUser(ApplicationUser user)
@@ -43,7 +50,10 @@ namespace AntimalnikAPI.Services
             await this._context.SaveChangesAsync();
         }
 
-        public Task<ApplicationUser> Login(ApplicationUser user) => this._context.Users.SingleOrDefaultAsync(x => x.UserName == user.UserName && x.Password == user.Password);
-
+        public async Task<SignInResult> Login(LoginModel input)
+        {
+            var result = await _signInManager.PasswordSignInAsync(input.Email, input.Password, false, lockoutOnFailure: false);
+            return result;
+        }
     }
 }

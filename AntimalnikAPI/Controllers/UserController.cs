@@ -1,6 +1,9 @@
 ﻿using AntimalnikAPI.Enums;
 using AntimalnikAPI.Models;
 using AntimalnikAPI.Services.Interfaces;
+using AntimalnikAPI.ViewModels;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,10 +18,14 @@ namespace AntimalnikAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService service)
+        public UserController(IUserService service, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             this._service = service;
+            this._userManager = userManager;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -43,10 +50,13 @@ namespace AntimalnikAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser(ApplicationUser user)
+        public IActionResult AddUser(UserInputViewModel userView)
         {
-            this._service.AddUser(user);
-            return new JsonResult($"The user with username {user.UserName} was added successfully.");
+            var user = _mapper.Map<ApplicationUser>(userView);
+            var result = this._service.AddUser(user, userView.Password);
+            if (result)
+                return new JsonResult($"The user with username {user.UserName} was added successfully.");
+            return new JsonResult("There was an error.");
         }
 
         [HttpPut]
@@ -64,14 +74,16 @@ namespace AntimalnikAPI.Controllers
         }
 
         [HttpPost("/login")]
-        public IActionResult Login(ApplicationUser user)
+        public IActionResult Login(LoginModel input)
         {
-            var logged = this._service.Login(user);
-            if (logged == null)
+            var logged = this._service.Login(input).Result;
+            if (!logged.Succeeded)
             {
                 return Ok(new { status = 401, isSuccess = false, message = "Грешно потребителско име или парола", });
             }
-            return Ok(new { status = 200, isSuccess = true, message = "Потребутелят влезе успешно", UserDetails = logged });
+            var user = _userManager.GetUserAsync(User).Result;
+            var userView = _mapper.Map<UserViewModel>(user);
+            return Ok(new { status = 200, isSuccess = true, message = "Потребителят влезе успешно", UserDetails = userView });
         }
     }
 }

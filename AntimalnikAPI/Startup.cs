@@ -1,8 +1,14 @@
+using AntimalnikAPI.Data;
+using AntimalnikAPI.MappingConfiguration;
+using AntimalnikAPI.Models;
 using AntimalnikAPI.Services;
 using AntimalnikAPI.Services.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using AntimalnikAPI.Data;
 
 
 namespace AntimalnikAPI
@@ -48,10 +53,17 @@ namespace AntimalnikAPI
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AntimalnikAPI", Version = "v1" });
             });
+
+            MapperConfiguration mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new ApplicationProfile()));
+            services.AddSingleton(mapperConfig.CreateMapper());
 
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
