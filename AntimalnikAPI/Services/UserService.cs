@@ -52,7 +52,7 @@ namespace AntimalnikAPI.Services
 
         public async Task<SignInResult> Login(LoginModel input)
         {
-            var result = await _signInManager.PasswordSignInAsync(input.Email, input.Password, false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, false, lockoutOnFailure: false);
             return result;
         }
     }

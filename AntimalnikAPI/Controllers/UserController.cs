@@ -53,6 +53,7 @@ namespace AntimalnikAPI.Controllers
         public IActionResult AddUser(UserInputViewModel userView)
         {
             var user = _mapper.Map<ApplicationUser>(userView);
+            user.EmailConfirmed = true;
             var result = this._service.AddUser(user, userView.Password);
             if (result)
                 return new JsonResult($"The user with username {user.UserName} was added successfully.");
@@ -73,7 +74,7 @@ namespace AntimalnikAPI.Controllers
             return new JsonResult("The user was deleted successfully.");
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public IActionResult Login(LoginModel input)
         {
             var logged = this._service.Login(input).Result;
@@ -81,7 +82,7 @@ namespace AntimalnikAPI.Controllers
             {
                 return Ok(new { status = 401, isSuccess = false, message = "Грешно потребителско име или парола", });
             }
-            var user = _userManager.GetUserAsync(User).Result;
+            var user = _service.GetUser(input.UserName).Result;
             var userView = _mapper.Map<UserViewModel>(user);
             return Ok(new { status = 200, isSuccess = true, message = "Потребителят влезе успешно", UserDetails = userView });
         }
