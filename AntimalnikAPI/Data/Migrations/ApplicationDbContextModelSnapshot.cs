@@ -80,6 +80,30 @@ namespace AntimalnikAPI.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("AntimalnikAPI.Models.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RecieverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecieverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("AntimalnikAPI.Models.Post", b =>
                 {
                     b.Property<string>("Id")
@@ -116,8 +140,8 @@ namespace AntimalnikAPI.Migrations
 
                     b.ToTable("Posts");
                 });
-				
-			modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,14 +155,26 @@ namespace AntimalnikAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("AntimalnikAPI.Models.Message", b =>
+                {
+                    b.HasOne("AntimalnikAPI.Models.ApplicationUser", "Reciever")
+                        .WithMany()
+                        .HasForeignKey("RecieverId");
+
+                    b.HasOne("AntimalnikAPI.Models.ApplicationUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Reciever");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("AntimalnikAPI.Models.Post", b =>
@@ -150,20 +186,10 @@ namespace AntimalnikAPI.Migrations
                     b.Navigation("User");
                 });
 
-
             modelBuilder.Entity("AntimalnikAPI.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Posts");modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Posts");
                 });
-                });
-				
-			
 #pragma warning restore 612, 618
         }
     }
