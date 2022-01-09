@@ -17,6 +17,8 @@ namespace AntimalnikAPI.MappingConfiguration
             CreateMap<UserInputViewModel, ApplicationUser>()
                 .ForMember(dest => dest.Posts, opt => opt.MapFrom(src => new List<Post>()))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => RoleType.User));
+            CreateMap<PostInputViewModel, Post>()
+                .ForMember(dest => dest.AddDate, opt => opt.MapFrom(src => DateTime.Now));
         }
     }
 }

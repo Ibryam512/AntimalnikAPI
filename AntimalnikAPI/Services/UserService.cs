@@ -26,7 +26,7 @@ namespace AntimalnikAPI.Services
 
         public Task<List<ApplicationUser>> GetUsers() => this._context.Users.ToListAsync();
 
-        public Task<ApplicationUser> GetUser(string userName) => this._context.Users.SingleOrDefaultAsync(x => x.UserName == userName);
+        public Task<ApplicationUser> GetUser(string userName) => this._context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
 
         public List<Post> GetUserPosts(string userName) => GetUser(userName).Result.Posts.ToList();
 

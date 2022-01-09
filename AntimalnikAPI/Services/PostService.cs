@@ -12,9 +12,11 @@ namespace AntimalnikAPI.Services
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext _context;
-        public PostService(ApplicationDbContext context)
+        private readonly IUserService _userService;
+        public PostService(ApplicationDbContext context, IUserService userService)
         {
             this._context = context;
+            this._userService = userService;
         }
         public Task<List<Post>> GetPosts() => this._context.Posts.ToListAsync();
 
@@ -23,6 +25,9 @@ namespace AntimalnikAPI.Services
         public async Task AddPost(Post post)
         {
             this._context.Posts.Add(post);
+            Console.WriteLine("adding in posts");
+            this._userService.GetUser(post.User.UserName).Result.Posts.Add(post);
+            Console.WriteLine("adding in user");
             await this._context.SaveChangesAsync();
         }
 

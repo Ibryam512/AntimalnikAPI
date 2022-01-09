@@ -1,11 +1,13 @@
-﻿using AntimalnikAPI.Services.Interfaces;
+﻿using AntimalnikAPI.Data;
+using AntimalnikAPI.Models;
+using AntimalnikAPI.Services.Interfaces;
+using AntimalnikAPI.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AntimalnikAPI.Data;
-using AntimalnikAPI.Models;
 
 namespace AntimalnikAPI.Controllers
 {
@@ -14,10 +16,14 @@ namespace AntimalnikAPI.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostService _service;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public PostController(IPostService service)
+        public PostController(IPostService service, IUserService userService, IMapper mapper)
         {
             this._service = service;
+            this._userService = userService;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -35,8 +41,10 @@ namespace AntimalnikAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPost(Post post)
+        public IActionResult AddPost(PostInputViewModel postView)
         {
+            var post = this._mapper.Map<Post>(postView);
+            post.User = this._userService.GetUser(postView.UserName).Result;
             this._service.AddPost(post);
             return new JsonResult($"Post with title {post.Title} added successfully.");
         }
