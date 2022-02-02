@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AntimalnikAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220107200252_InitialCreate")]
+    [Migration("20220202154258_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,9 @@ namespace AntimalnikAPI.Migrations
 
                     b.Property<string>("SenderId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");

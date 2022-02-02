@@ -57,7 +57,8 @@ namespace AntimalnikAPI.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RecieverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -17,7 +17,7 @@ namespace AntimalnikAPI.Services
             this._context = context;
         }
 
-        public Task<List<Message>> GetSentMessages(string userName) => this._context.Messages.Where(x => x.Sender.UserName == userName).ToListAsync();
+        public Task<List<Message>> GetSentMessages(string userName) => this._context.Messages.Where(x => x.Sender.UserName == userName).Include(x => x.Reciever).ToListAsync();
 
         public Task<List<Message>> GetRecievedMessages(string userName) => this._context.Messages.Where(x => x.Reciever.UserName == userName).ToListAsync();
 
@@ -27,8 +27,9 @@ namespace AntimalnikAPI.Services
             await this._context.SaveChangesAsync();
         }
 
-        public async Task DeleteMessage(Message message)
+        public async Task DeleteMessage(string id)
         {
+            var message = this._context.Messages.SingleOrDefaultAsync(x => x.Id == id).Result;
             this._context.Remove(message);
             await this._context.SaveChangesAsync();
         }

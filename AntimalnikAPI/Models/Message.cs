@@ -15,5 +15,6 @@ namespace AntimalnikAPI.Models
         public ApplicationUser Sender { get; set; }
         public ApplicationUser Reciever { get; set; }
         public string Text { get; set; }
+        public DateTime SentDate { get; set; }
     }
 }

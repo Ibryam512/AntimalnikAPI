@@ -92,6 +92,9 @@ namespace AntimalnikAPI.Migrations
                     b.Property<string>("SenderId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 

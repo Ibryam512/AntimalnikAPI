@@ -16,30 +16,50 @@ namespace AntimalnikAPI.Controllers
     public class MessageController : ControllerBase
     {
         private readonly IMessageService _service;
-        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public MessageController(IMessageService service, IMapper mapper)
+        public MessageController(IMessageService service, IUserService userService)
         {
             this._service = service;
-            this._mapper = mapper;
+            this._userService = userService;
         }
 
         [HttpGet("sent")]
-        public IActionResult GetSentMessages()
+        public IActionResult GetSentMessages(string userName)
         {
-            string userName = "";
-            var messages = this._service.GetSentMessages(userName);
+            var messages = this._service.GetSentMessages(userName).Result;
             return new JsonResult(messages);
         }
 
         [HttpGet("recieved")]
-        public IActionResult GetRecievedMessages()
+        public IActionResult GetRecievedMessages(string userName)
         {
-            string userName = "";
-            var messages = this._service.GetRecievedMessages(userName);
+            var messages = this._service.GetRecievedMessages(userName).Result;
             return new JsonResult(messages);
         }
 
+        [HttpPost("send")]
+        public IActionResult SendMessage(MessageInputViewModel messageView)
+        {
+            var sender = this._userService.GetUser(messageView.Sender).Result;
+            var reciever = this._userService.GetUser(messageView.Reciever).Result;
+            var message = new Message 
+            {
+                Sender = sender,
+                Reciever = reciever,
+                Text = messageView.Text,
+                SentDate = DateTime.Now
+            };
+            this._service.SendMessage(message);
+            return new JsonResult("The message is sent successfully.");
+        }
+
+        [HttpDelete("delete/{id}")]
+        public IActionResult DeleteMessage(string id)
+        {
+            this._service.DeleteMessage(id);
+            return new JsonResult("The message has been deleted successfully.");
+        }
         
     }
 }
