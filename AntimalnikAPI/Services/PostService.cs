@@ -20,7 +20,7 @@ namespace AntimalnikAPI.Services
         }
         public Task<List<Post>> GetPosts() => this._context.Posts.Include(post => post.User).ToListAsync();
 
-        public Task<Post> GetPost(string id) => this._context.Posts.SingleOrDefaultAsync(x => x.Id == id);
+        public Task<Post> GetPost(string id) => this._context.Posts.Include(post => post.User).SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task AddPost(Post post)
         {

@@ -24,14 +24,14 @@ namespace AntimalnikAPI.Controllers
             this._userService = userService;
         }
 
-        [HttpGet("sent")]
+        [HttpGet("{userName}/sent")]
         public IActionResult GetSentMessages(string userName)
         {
             var messages = this._service.GetSentMessages(userName).Result;
             return new JsonResult(messages);
         }
 
-        [HttpGet("recieved")]
+        [HttpGet("{userName}/recieved")]
         public IActionResult GetRecievedMessages(string userName)
         {
             var messages = this._service.GetRecievedMessages(userName).Result;
