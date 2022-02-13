@@ -8,9 +8,7 @@ namespace AntimalnikAPI.Enums
     public enum RoleType
     {
         User = 0,
-        Student = 1,
-        Teacher = 2,
-        Principal = 4,
-        Admin = 8
+        Moderator = 1,
+        Admin = 2
     }
 }

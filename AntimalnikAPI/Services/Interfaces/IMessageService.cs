@@ -12,5 +12,6 @@ namespace AntimalnikAPI.Services.Interfaces
         Task<List<Message>> GetRecievedMessages(string userName);
         Task SendMessage(Message message);
         Task DeleteMessage(string id);
+        Task SendQuestion(Message message);
     }
 }

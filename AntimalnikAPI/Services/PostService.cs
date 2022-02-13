@@ -25,9 +25,7 @@ namespace AntimalnikAPI.Services
         public async Task AddPost(Post post)
         {
             this._context.Posts.Add(post);
-            Console.WriteLine("adding in posts");
             this._userService.GetUser(post.User.UserName).Result.Posts.Add(post);
-            Console.WriteLine("adding in user");
             await this._context.SaveChangesAsync();
         }
 

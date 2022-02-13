@@ -60,6 +60,20 @@ namespace AntimalnikAPI.Controllers
             this._service.DeleteMessage(id);
             return new JsonResult("The message has been deleted successfully.");
         }
+
+        [HttpPost("send/question")]
+        public IActionResult SendQuestion(MessageInputViewModel messageView)
+        {
+            var sender = this._userService.GetUser(messageView.Sender).Result;
+            var message = new Message 
+            {
+                Sender = sender,
+                Text = messageView.Text,
+                SentDate = DateTime.Now
+            };
+            this._service.SendQuestion(message);
+            return new JsonResult("The question is sent successfully.");
+        }
         
     }
 }

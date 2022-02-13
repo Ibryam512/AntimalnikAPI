@@ -1,4 +1,5 @@
 ﻿using AntimalnikAPI.Data;
+using AntimalnikAPI.Enums;
 using AntimalnikAPI.Models;
 using AntimalnikAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,17 @@ namespace AntimalnikAPI.Services
         {
             var message = this._context.Messages.SingleOrDefaultAsync(x => x.Id == id).Result;
             this._context.Remove(message);
+            await this._context.SaveChangesAsync();
+        }
+
+        public async Task SendQuestion(Message message)
+        {
+            var admins = this._context.Users.Where(x => x.Role == RoleType.Admin).ToListAsync().Result;
+            foreach (var admin in admins)
+            {
+                message.Reciever = admin;
+                this._context.Add(message);
+            }
             await this._context.SaveChangesAsync();
         }
     }
