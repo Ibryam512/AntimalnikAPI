@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using MySql.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

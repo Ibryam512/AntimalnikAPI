@@ -13,11 +13,13 @@ namespace AntimalnikAPI.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IUserService _userService;
+		
         public PostService(ApplicationDbContext context, IUserService userService)
         {
             this._context = context;
             this._userService = userService;
         }
+		
         public Task<List<Post>> GetPosts() => this._context.Posts.Include(post => post.User).ToListAsync();
 
         public Task<Post> GetPost(string id) => this._context.Posts.Include(post => post.User).SingleOrDefaultAsync(x => x.Id == id);
