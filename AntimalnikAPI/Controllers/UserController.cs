@@ -18,13 +18,11 @@ namespace AntimalnikAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService service, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserController(IUserService service, IMapper mapper)
         {
             this._service = service;
-            this._userManager = userManager;
             this._mapper = mapper;
         }
 
