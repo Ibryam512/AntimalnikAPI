@@ -28,20 +28,20 @@ namespace AntimalnikAPI.Services
         {
             this._context.Posts.Add(post);
             this._userService.GetUser(post.User.UserName).Result.Posts.Add(post);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
         public async Task EditPost(Post post)
         {
             this._context.Posts.Update(post);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
         public async Task DeletePost(string id)
         {
             var post = GetPost(id).Result;
             this._context.Posts.Remove(post);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
     }
 }

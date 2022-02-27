@@ -25,14 +25,14 @@ namespace AntimalnikAPI.Services
         public async Task SendMessage(Message message)
         {
             this._context.Add(message);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
         public async Task DeleteMessage(string id)
         {
             var message = this._context.Messages.SingleOrDefaultAsync(x => x.Id == id).Result;
             this._context.Remove(message);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
         public async Task SendQuestion(Message message)
@@ -43,7 +43,7 @@ namespace AntimalnikAPI.Services
                 message.Reciever = admin;
                 this._context.Add(message);
             }
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
     }
 }

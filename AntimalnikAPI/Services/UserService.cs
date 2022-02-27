@@ -40,14 +40,14 @@ namespace AntimalnikAPI.Services
         public async Task EditUser(ApplicationUser user)
         {
             this._context.Users.Update(user);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
         public async Task DeleteUser(string userName)
         {
             var user = GetUser(userName).Result;
             this._context.Users.Remove(user);
-            await this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
         public async Task<SignInResult> Login(LoginModel input)
