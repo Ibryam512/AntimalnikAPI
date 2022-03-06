@@ -13,9 +13,10 @@ namespace AntimalnikAPI.Services
     public class MessageService : IMessageService
     {
         private readonly ApplicationDbContext _context;
+        
         public MessageService(ApplicationDbContext context)
         {
-            this._context = context;
+            this._context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public Task<List<Message>> GetSentMessages(string userName) => this._context.Messages.Where(x => x.Sender.UserName == userName).Include(x => x.Sender).Include(x => x.Reciever).ToListAsync();

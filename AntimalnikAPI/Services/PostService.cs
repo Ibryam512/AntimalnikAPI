@@ -16,8 +16,8 @@ namespace AntimalnikAPI.Services
 		
         public PostService(ApplicationDbContext context, IUserService userService)
         {
-            this._context = context;
-            this._userService = userService;
+            this._context = context ?? throw new ArgumentNullException(nameof(context));
+            this._userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 		
         public Task<List<Post>> GetPosts() => this._context.Posts.Include(post => post.User).ToListAsync();

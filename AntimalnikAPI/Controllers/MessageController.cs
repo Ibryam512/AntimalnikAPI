@@ -20,8 +20,8 @@ namespace AntimalnikAPI.Controllers
 
         public MessageController(IMessageService service, IUserService userService)
         {
-            this._service = service;
-            this._userService = userService;
+            this._service = service ?? throw new ArgumentNullException(nameof(service));
+            this._userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         [HttpGet("{userName}/sent")]

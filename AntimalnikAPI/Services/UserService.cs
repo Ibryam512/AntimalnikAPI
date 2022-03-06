@@ -19,14 +19,22 @@ namespace AntimalnikAPI.Services
 
         public UserService(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
-            this._context = context;
-            this._signInManager = signInManager;
-            this._userManager = userManager;
+            this._context = context ?? throw new ArgumentNullException(nameof(context));
+            this._signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            this._userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         public Task<List<ApplicationUser>> GetUsers() => this._context.Users.ToListAsync();
 
-        public Task<ApplicationUser> GetUser(string userName) => this._context.Users.Include(user => user.Posts).FirstOrDefaultAsync(x => x.UserName == userName);
+        public Task<ApplicationUser> GetUser(string userName)
+        {
+            var user = this._context.Users.Include(user => user.Posts).FirstOrDefaultAsync(x => x.UserName == userName);
+            if (user == null)
+            {
+                throw new NullReferenceException("User does not exist.");
+            }
+            return user;
+        }
 
         public List<Post> GetUserPosts(string userName) => GetUser(userName).Result.Posts.ToList();
 
@@ -53,6 +61,10 @@ namespace AntimalnikAPI.Services
         public async Task<SignInResult> Login(LoginModel input)
         {
             var result = await _signInManager.PasswordSignInAsync(input.UserName, input.Password, false, lockoutOnFailure: false);
+            if (result == null)
+            {
+                throw new NullReferenceException();
+            }
             return result;
         }
     }

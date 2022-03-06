@@ -21,9 +21,9 @@ namespace AntimalnikAPI.Controllers
 
         public PostController(IPostService service, IUserService userService, IMapper mapper)
         {
-            this._service = service;
-            this._userService = userService;
-            this._mapper = mapper;
+            this._service = service ?? throw new ArgumentNullException(nameof(service));
+            this._userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
@@ -43,10 +43,17 @@ namespace AntimalnikAPI.Controllers
         [HttpPost]
         public IActionResult AddPost(PostInputViewModel postView)
         {
-            var post = this._mapper.Map<Post>(postView);
-            post.User = this._userService.GetUser(postView.UserName).Result;
-            this._service.AddPost(post);
-            return new JsonResult($"Post with title {post.Title} added successfully.");
+            try 
+            {
+                var post = this._mapper.Map<Post>(postView);
+                post.User = this._userService.GetUser(postView.UserName).Result;
+                this._service.AddPost(post);
+                return new JsonResult($"Post with title {post.Title} added successfully.");
+            }
+            catch (NullReferenceException) 
+            {
+                return new JsonResult($"The user with username {postView.UserName} does not exist!");
+            }
         }
 
         [HttpPut]

@@ -22,8 +22,8 @@ namespace AntimalnikAPI.Controllers
 
         public UserController(IUserService service, IMapper mapper)
         {
-            this._service = service;
-            this._mapper = mapper;
+            this._service = service ?? throw new ArgumentNullException(nameof(service));;
+            this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));;
         }
 
         [HttpGet]
@@ -50,12 +50,19 @@ namespace AntimalnikAPI.Controllers
         [HttpPost]
         public IActionResult AddUser(UserInputViewModel userView)
         {
-            var user = _mapper.Map<ApplicationUser>(userView);
-            user.EmailConfirmed = true;
-            var result = this._service.AddUser(user, userView.Password);
-            if (result)
-                return new JsonResult($"The user with username {user.UserName} was added successfully.");
-            return new JsonResult("There was an error.");
+            try
+            {
+                var user = _mapper.Map<ApplicationUser>(userView);
+                user.EmailConfirmed = true;
+                var result = this._service.AddUser(user, userView.Password);
+                if (result)
+                    return new JsonResult($"The user with username {user.UserName} was added successfully.");
+                return new JsonResult("There was an error.");
+            }
+            catch (NullReferenceException)
+            {
+                return new JsonResult("There was an error, please try again later.");
+            }
         }
 
         [HttpPut]
@@ -75,14 +82,21 @@ namespace AntimalnikAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginModel input)
         {
-            var logged = this._service.Login(input).Result;
-            if (!logged.Succeeded)
+            try 
             {
-                return Ok(new { status = 401, isSuccess = false, message = "Грешно потребителско име или парола", });
+                var logged = this._service.Login(input).Result;
+                if (!logged.Succeeded)
+                {
+                    return Ok(new { status = 401, isSuccess = false, message = "Грешно потребителско име или парола", });
+                }
+                var user = _service.GetUser(input.UserName).Result;
+                var userView = _mapper.Map<UserViewModel>(user);
+                return Ok(new { status = 200, isSuccess = true, message = "Потребителят влезе успешно", UserDetails = userView });
             }
-            var user = _service.GetUser(input.UserName).Result;
-            var userView = _mapper.Map<UserViewModel>(user);
-            return Ok(new { status = 200, isSuccess = true, message = "Потребителят влезе успешно", UserDetails = userView });
+            catch (NullReferenceException)
+            {
+                return Ok(new { status = 404, message = "Потребител с тези данни не съществува."});
+            }
         }
     }
 }
