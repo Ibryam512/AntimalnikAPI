@@ -67,5 +67,17 @@ namespace AntimalnikAPI.Services
             }
             return result;
         }
+
+        public bool DoesUserNameAlreadyExist(string userName)
+        {
+            var userNames = this._context.Users.Select(x => x.UserName).ToList();
+            return userNames.Contains(userName);
+        }
+
+        public bool DoesEmailAlreadyExist(string email)
+        {
+            var emails = this._context.Users.Select(x => x.Email).ToList();
+            return emails.Contains(email);
+        }
     }
 }

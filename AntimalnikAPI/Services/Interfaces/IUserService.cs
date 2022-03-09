@@ -17,5 +17,7 @@ namespace AntimalnikAPI.Services.Interfaces
         Task EditUser(ApplicationUser user);
         Task DeleteUser(string userName);
         Task<SignInResult> Login(LoginModel input);
+        bool DoesUserNameAlreadyExist(string userName);
+        bool DoesEmailAlreadyExist(string email);
     }
 }

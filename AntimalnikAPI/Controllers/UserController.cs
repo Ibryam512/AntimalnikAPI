@@ -52,16 +52,26 @@ namespace AntimalnikAPI.Controllers
         {
             try
             {
+                if (this._service.DoesUserNameAlreadyExist(userView.UserName))
+                {
+                    return new JsonResult(new { message = "Потребител със същото потребителско име вече съществува!", status = 401});
+                }
+
+                if (this._service.DoesEmailAlreadyExist(userView.Email))
+                {
+                    return new JsonResult(new { message = "Потребител със същия имейл вече съществува!", status = 401});
+                }
+
                 var user = _mapper.Map<ApplicationUser>(userView);
                 user.EmailConfirmed = true;
                 var result = this._service.AddUser(user, userView.Password);
                 if (result)
-                    return new JsonResult($"The user with username {user.UserName} was added successfully.");
-                return new JsonResult("There was an error.");
+                    return new JsonResult( new { message = $"The user with username {user.UserName} was added successfully.", status = 200} );
+                return new JsonResult( new { message = "There was an error.", status = 401 });
             }
             catch (NullReferenceException)
             {
-                return new JsonResult("There was an error, please try again later.");
+                return new JsonResult( new { message = "There was an error, please try again later.", status = 401 });
             }
         }
 
