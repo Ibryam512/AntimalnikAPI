@@ -55,7 +55,7 @@ namespace AntimalnikAPI
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseMySQL(
+               options.UseSqlServer(
                    Configuration.GetConnectionString("HostedConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(o => {
