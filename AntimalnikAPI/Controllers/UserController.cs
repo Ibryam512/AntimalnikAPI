@@ -1,15 +1,9 @@
-﻿using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
-using AntimalnikAPI.Services.Interfaces;
-using AntimalnikAPI.ViewModels;
+﻿using AntimalnikAPI.BLL.Interfaces;
+using AntimalnikAPI.DAL.Models;
+using AntimalnikAPI.DTOs;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AntimalnikAPI.Controllers
 {
@@ -22,8 +16,8 @@ namespace AntimalnikAPI.Controllers
 
         public UserController(IUserService service, IMapper mapper)
         {
-            this._service = service ?? throw new ArgumentNullException(nameof(service));;
-            this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));;
+            this._service = service ?? throw new ArgumentNullException(nameof(service)); ;
+            this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper)); ;
         }
 
         [HttpGet]
@@ -54,24 +48,24 @@ namespace AntimalnikAPI.Controllers
             {
                 if (this._service.DoesUserNameAlreadyExist(userView.UserName))
                 {
-                    return new JsonResult(new { message = "Потребител със същото потребителско име вече съществува!", status = 401});
+                    return new JsonResult(new { message = "Потребител със същото потребителско име вече съществува!", status = 401 });
                 }
 
                 if (this._service.DoesEmailAlreadyExist(userView.Email))
                 {
-                    return new JsonResult(new { message = "Потребител със същия имейл вече съществува!", status = 401});
+                    return new JsonResult(new { message = "Потребител със същия имейл вече съществува!", status = 401 });
                 }
 
                 var user = _mapper.Map<ApplicationUser>(userView);
                 user.EmailConfirmed = true;
                 var result = this._service.AddUser(user, userView.Password);
                 if (result)
-                    return new JsonResult( new { message = $"The user with username {user.UserName} was added successfully.", status = 200} );
-                return new JsonResult( new { message = "There was an error.", status = 401 });
+                    return new JsonResult(new { message = $"The user with username {user.UserName} was added successfully.", status = 200 });
+                return new JsonResult(new { message = "There was an error.", status = 401 });
             }
             catch (NullReferenceException)
             {
-                return new JsonResult( new { message = "There was an error, please try again later.", status = 401 });
+                return new JsonResult(new { message = "There was an error, please try again later.", status = 401 });
             }
         }
 
@@ -92,7 +86,7 @@ namespace AntimalnikAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginModel input)
         {
-            try 
+            try
             {
                 var logged = this._service.Login(input).Result;
                 if (!logged.Succeeded)
@@ -105,7 +99,7 @@ namespace AntimalnikAPI.Controllers
             }
             catch (NullReferenceException)
             {
-                return Ok(new { status = 404, message = "Потребител с тези данни не съществува."});
+                return Ok(new { status = 404, message = "Потребител с тези данни не съществува." });
             }
         }
     }

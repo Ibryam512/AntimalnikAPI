@@ -1,10 +1,8 @@
-using AntimalnikAPI.Data;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
-using AntimalnikAPI.Services;
-using AntimalnikAPI.Services.Interfaces;
+using AntimalnikAPI.BLL;
+using AntimalnikAPI.Common;
+using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,12 +12,13 @@ namespace AntimalnikAPI.Tests
 {
     public class MessageServiceShould
     {
-        private ApplicationDbContext _Context;
+        private AntimalnikDbContext _Context;
         private MessageService _MessageService;
 
         private ApplicationUser userOne =>
-            new ApplicationUser {
-				UserName = "test1",
+            new ApplicationUser
+            {
+                UserName = "test1",
                 FirstName = "test",
                 LastName = "test",
                 Email = "test@test.com",
@@ -28,8 +27,9 @@ namespace AntimalnikAPI.Tests
             };
 
         private ApplicationUser userTwo =>
-            new ApplicationUser {
-				UserName = "test2",
+            new ApplicationUser
+            {
+                UserName = "test2",
                 FirstName = "test",
                 LastName = "test",
                 Email = "test@test.com",
@@ -38,20 +38,21 @@ namespace AntimalnikAPI.Tests
             };
 
         private Message sampleMessage =>
-			new Message {
-				Sender = userOne,
+            new Message
+            {
+                Sender = userOne,
                 Reciever = userTwo,
                 Text = "test",
-                SentDate = new DateTime()
-			};
+                CreationDate = new DateTime()
+            };
 
 
         [SetUp]
         public void Setup()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<AntimalnikDbContext>();
             optionsBuilder.UseInMemoryDatabase("Antimalnik");
-            _Context = new ApplicationDbContext(optionsBuilder.Options);
+            _Context = new AntimalnikDbContext(optionsBuilder.Options);
             _MessageService = new MessageService(_Context);
             _Context.Users.Add(userOne);
             _Context.Users.Add(userTwo);

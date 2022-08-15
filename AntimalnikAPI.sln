@@ -5,7 +5,15 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntimalnikAPI", "AntimalnikAPI\AntimalnikAPI.csproj", "{B59E9E63-6DA1-4E25-A464-4B41B85E0A0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntimalnikAPI.Tests", "AntimalnikAPI.Tests\AntimalnikAPI.Tests.csproj", "{E3C857EE-2CEF-4983-9807-4B012FF50622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntimalnikAPI.Tests", "AntimalnikAPI.Tests\AntimalnikAPI.Tests.csproj", "{E3C857EE-2CEF-4983-9807-4B012FF50622}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntimalnikAPI.DAL", "AntimalnikAPI.DAL\AntimalnikAPI.DAL.csproj", "{62D442F9-8815-46D6-BC22-D8051CD19477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntimalnikAPI.BLL", "AntimalnikAPI.BLL\AntimalnikAPI.BLL.csproj", "{4FD6511E-2B31-4BAB-B7F7-B84BE265E593}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntimalnikAPI.DTOs", "AntimalnikAPI.DTOs\AntimalnikAPI.DTOs.csproj", "{7AEE47B4-1073-4733-A0A8-C5A18C052C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntimalnikAPI.Common", "AntimalnikAPI.Common\AntimalnikAPI.Common.csproj", "{A9D5F193-2096-4ED3-895A-11FA51A15E6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{E3C857EE-2CEF-4983-9807-4B012FF50622}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3C857EE-2CEF-4983-9807-4B012FF50622}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3C857EE-2CEF-4983-9807-4B012FF50622}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62D442F9-8815-46D6-BC22-D8051CD19477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62D442F9-8815-46D6-BC22-D8051CD19477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62D442F9-8815-46D6-BC22-D8051CD19477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62D442F9-8815-46D6-BC22-D8051CD19477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FD6511E-2B31-4BAB-B7F7-B84BE265E593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FD6511E-2B31-4BAB-B7F7-B84BE265E593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FD6511E-2B31-4BAB-B7F7-B84BE265E593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FD6511E-2B31-4BAB-B7F7-B84BE265E593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AEE47B4-1073-4733-A0A8-C5A18C052C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AEE47B4-1073-4733-A0A8-C5A18C052C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AEE47B4-1073-4733-A0A8-C5A18C052C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AEE47B4-1073-4733-A0A8-C5A18C052C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9D5F193-2096-4ED3-895A-11FA51A15E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9D5F193-2096-4ED3-895A-11FA51A15E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9D5F193-2096-4ED3-895A-11FA51A15E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9D5F193-2096-4ED3-895A-11FA51A15E6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

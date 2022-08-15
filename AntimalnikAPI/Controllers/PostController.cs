@@ -1,13 +1,9 @@
-﻿using AntimalnikAPI.Data;
-using AntimalnikAPI.Models;
-using AntimalnikAPI.Services.Interfaces;
-using AntimalnikAPI.ViewModels;
+﻿using AntimalnikAPI.BLL.Interfaces;
+using AntimalnikAPI.DAL.Models;
+using AntimalnikAPI.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AntimalnikAPI.Controllers
 {
@@ -43,14 +39,14 @@ namespace AntimalnikAPI.Controllers
         [HttpPost]
         public IActionResult AddPost(PostInputViewModel postView)
         {
-            try 
+            try
             {
                 var post = this._mapper.Map<Post>(postView);
-                post.User = this._userService.GetUser(postView.UserName).Result;
+                post.Creator = this._userService.GetUser(postView.UserName).Result;
                 this._service.AddPost(post);
                 return new JsonResult($"Post with title {post.Title} added successfully.");
             }
-            catch (NullReferenceException) 
+            catch (NullReferenceException)
             {
                 return new JsonResult($"The user with username {postView.UserName} does not exist!");
             }

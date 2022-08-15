@@ -1,13 +1,11 @@
-using AntimalnikAPI.Data;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
-using AntimalnikAPI.Services;
-using AntimalnikAPI.Services.Interfaces;
+using AntimalnikAPI.BLL;
+using AntimalnikAPI.Common;
+using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Models;
+using AntimalnikAPI.DTOs;
 using AntimalnikAPI.Tests.FakeClasses;
-using AntimalnikAPI.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,24 +16,26 @@ namespace AntimalnikAPI.Tests
 {
     public class UserServiceShould
     {
-        
+
         private FakeSignInManager _SignInManager;
         private FakeUserManager _UserManager;
-        private ApplicationDbContext _Context;
+        private AntimalnikDbContext _Context;
         private UserService _UserService;
 
         private ApplicationUser sampleUser =>
-			new ApplicationUser {
-				UserName = "test",
+            new ApplicationUser
+            {
+                UserName = "test",
                 FirstName = "test",
                 LastName = "test",
                 Email = "test@test.com",
                 Role = RoleType.User,
                 Posts = new List<Post>()
-			};
+            };
 
         private LoginModel sampleLoginData =>
-            new LoginModel {
+            new LoginModel
+            {
                 UserName = "test",
                 Password = "test"
             };
@@ -44,9 +44,9 @@ namespace AntimalnikAPI.Tests
         [SetUp]
         public void Setup()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<AntimalnikDbContext>();
             optionsBuilder.UseInMemoryDatabase("Antimalnik");
-            _Context = new ApplicationDbContext(optionsBuilder.Options);
+            _Context = new AntimalnikDbContext(optionsBuilder.Options);
             _SignInManager = new FakeSignInManager(_Context);
             _UserManager = new FakeUserManager(_Context);
             _UserService = new UserService(_Context, _SignInManager, _UserManager);
