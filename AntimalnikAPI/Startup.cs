@@ -1,10 +1,10 @@
+using AntimalnikAPI.BLL;
+using AntimalnikAPI.BLL.Interfaces;
+using AntimalnikAPI.BLL.MappingConfiguration;
 using AntimalnikAPI.DAL;
 using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.DAL.Repositories;
 using AntimalnikAPI.DAL.Repositories.Interfaces;
-using AntimalnikAPI.MappingConfiguration;
-using AntimalnikAPI.Services;
-using AntimalnikAPI.Services.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

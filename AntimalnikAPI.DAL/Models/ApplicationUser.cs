@@ -1,4 +1,4 @@
-﻿using AntimalnikAPI.DAL.Enums;
+﻿using AntimalnikAPI.Common;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 

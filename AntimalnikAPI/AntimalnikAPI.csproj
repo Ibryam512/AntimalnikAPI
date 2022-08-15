@@ -29,7 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AntimalnikAPI.BLL\AntimalnikAPI.BLL.csproj" />
     <ProjectReference Include="..\AntimalnikAPI.DAL\AntimalnikAPI.DAL.csproj" />
+    <ProjectReference Include="..\AntimalnikAPI.DTOs\AntimalnikAPI.DTOs.csproj" />
   </ItemGroup>
 
 </Project>

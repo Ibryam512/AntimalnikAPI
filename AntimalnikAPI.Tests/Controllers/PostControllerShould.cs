@@ -1,8 +1,8 @@
+using AntimalnikAPI.BLL.Interfaces;
+using AntimalnikAPI.Common;
 using AntimalnikAPI.Controllers;
-using AntimalnikAPI.DAL.Enums;
 using AntimalnikAPI.DAL.Models;
-using AntimalnikAPI.Services.Interfaces;
-using AntimalnikAPI.ViewModels;
+using AntimalnikAPI.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

@@ -1,14 +1,14 @@
-﻿using AntimalnikAPI.DAL;
-using AntimalnikAPI.DAL.Enums;
+﻿using AntimalnikAPI.BLL.Interfaces;
+using AntimalnikAPI.Common;
+using AntimalnikAPI.DAL;
 using AntimalnikAPI.DAL.Models;
-using AntimalnikAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AntimalnikAPI.Services
+namespace AntimalnikAPI.BLL
 {
     public class MessageService : IMessageService
     {

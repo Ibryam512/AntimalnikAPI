@@ -1,4 +1,4 @@
-namespace AntimalnikAPI.ViewModels
+namespace AntimalnikAPI.DTOs
 {
     public class LoginModel
     {

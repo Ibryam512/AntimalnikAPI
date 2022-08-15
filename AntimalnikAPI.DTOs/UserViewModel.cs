@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace AntimalnikAPI.ViewModels
+namespace AntimalnikAPI.DTOs
 {
     public class UserViewModel
     {

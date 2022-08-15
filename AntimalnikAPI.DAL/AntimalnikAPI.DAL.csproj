@@ -14,4 +14,8 @@
     <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AntimalnikAPI.Common\AntimalnikAPI.Common.csproj" />
+  </ItemGroup>
+
 </Project>

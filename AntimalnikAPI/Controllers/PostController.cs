@@ -1,6 +1,6 @@
-﻿using AntimalnikAPI.DAL.Models;
-using AntimalnikAPI.Services.Interfaces;
-using AntimalnikAPI.ViewModels;
+﻿using AntimalnikAPI.BLL.Interfaces;
+using AntimalnikAPI.DAL.Models;
+using AntimalnikAPI.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -1,4 +1,4 @@
-﻿namespace AntimalnikAPI.DAL.Enums
+﻿namespace AntimalnikAPI.Common
 {
     public enum RoleType
     {

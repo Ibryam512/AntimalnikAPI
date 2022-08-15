@@ -1,6 +1,6 @@
+using AntimalnikAPI.BLL.Interfaces;
 using AntimalnikAPI.Controllers;
-using AntimalnikAPI.Services.Interfaces;
-using AntimalnikAPI.ViewModels;
+using AntimalnikAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;

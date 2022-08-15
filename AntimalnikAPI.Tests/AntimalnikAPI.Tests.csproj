@@ -20,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AntimalnikAPI.BLL\AntimalnikAPI.BLL.csproj" />
+    <ProjectReference Include="..\AntimalnikAPI.Common\AntimalnikAPI.Common.csproj" />
     <ProjectReference Include="..\AntimalnikAPI.DAL\AntimalnikAPI.DAL.csproj" />
+    <ProjectReference Include="..\AntimalnikAPI.DTOs\AntimalnikAPI.DTOs.csproj" />
     <ProjectReference Include="..\AntimalnikAPI\AntimalnikAPI.csproj" />
   </ItemGroup>
 

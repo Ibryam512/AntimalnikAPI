@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AntimalnikAPI.Services.Interfaces
+namespace AntimalnikAPI.BLL.Interfaces
 {
     public interface IPostService
     {

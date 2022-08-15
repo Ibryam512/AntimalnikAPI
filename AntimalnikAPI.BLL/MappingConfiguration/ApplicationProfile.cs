@@ -1,11 +1,11 @@
-using AntimalnikAPI.DAL.Enums;
+using AntimalnikAPI.Common;
 using AntimalnikAPI.DAL.Models;
-using AntimalnikAPI.ViewModels;
+using AntimalnikAPI.DTOs;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 
-namespace AntimalnikAPI.MappingConfiguration
+namespace AntimalnikAPI.BLL.MappingConfiguration
 {
     public class ApplicationProfile : Profile
     {
