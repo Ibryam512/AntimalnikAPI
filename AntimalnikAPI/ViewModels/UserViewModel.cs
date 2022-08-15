@@ -1,5 +1,3 @@
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
 using System.Collections.Generic;
 
 namespace AntimalnikAPI.ViewModels
@@ -9,7 +7,7 @@ namespace AntimalnikAPI.ViewModels
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public RoleType Role { get; set; }
-        public List<Post> Posts { get; set; }
+        //public RoleType Role { get; set; }
+        //public List<Post> Posts { get; set; }
     }
 }

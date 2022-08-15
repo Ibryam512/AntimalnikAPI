@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.EntityFrameworkCore.Metadata;
 
-namespace AntimalnikAPI.Migrations
+namespace AntimalnikAPI.DAL.Migrations
 {
-    public partial class Initial : Migration
+    public partial class NewMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,7 +59,7 @@ namespace AntimalnikAPI.Migrations
                     SenderId = table.Column<string>(type: "varchar(767)", nullable: true),
                     RecieverId = table.Column<string>(type: "varchar(767)", nullable: true),
                     Text = table.Column<string>(type: "text", nullable: true),
-                    SentDate = table.Column<DateTime>(type: "datetime", nullable: false)
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,15 +89,15 @@ namespace AntimalnikAPI.Migrations
                     Price = table.Column<double>(type: "double", nullable: false),
                     DeleteDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Image = table.Column<string>(type: "text", nullable: true),
-                    AddDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(767)", nullable: true)
+                    CreatorId = table.Column<string>(type: "varchar(767)", nullable: true),
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Posts_Users_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -114,9 +114,9 @@ namespace AntimalnikAPI.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_UserId",
+                name: "IX_Posts_CreatorId",
                 table: "Posts",
-                column: "UserId");
+                column: "CreatorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

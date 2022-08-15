@@ -1,11 +1,9 @@
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
+using AntimalnikAPI.DAL.Enums;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.ViewModels;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AntimalnikAPI.MappingConfiguration
 {
@@ -18,7 +16,7 @@ namespace AntimalnikAPI.MappingConfiguration
                 .ForMember(dest => dest.Posts, opt => opt.MapFrom(src => new List<Post>()))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => RoleType.User));
             CreateMap<PostInputViewModel, Post>()
-                .ForMember(dest => dest.AddDate, opt => opt.MapFrom(src => DateTime.Now));
+                .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => DateTime.Now));
         }
     }
 }

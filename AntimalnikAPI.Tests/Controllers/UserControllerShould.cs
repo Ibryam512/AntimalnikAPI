@@ -1,16 +1,14 @@
 using AntimalnikAPI.Controllers;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
+using AntimalnikAPI.DAL.Enums;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services.Interfaces;
 using AntimalnikAPI.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AntimalnikAPI.Tests
 {
@@ -21,30 +19,33 @@ namespace AntimalnikAPI.Tests
         private UserController _UserController;
 
         private UserInputViewModel sampleUserView =>
-			new UserInputViewModel {
-				UserName = "test",
+            new UserInputViewModel
+            {
+                UserName = "test",
                 FirstName = "test",
                 LastName = "test",
                 Email = "test@test.com",
                 Password = "test"
-			};
+            };
 
         private ApplicationUser sampleUser =>
-			new ApplicationUser {
-				UserName = "test",
+            new ApplicationUser
+            {
+                UserName = "test",
                 FirstName = "test",
                 LastName = "test",
                 Email = "test@test.com",
                 Role = RoleType.User,
                 Posts = new List<Post>()
-			};
+            };
 
         private LoginModel sampleLoginData =>
-            new LoginModel {
+            new LoginModel
+            {
                 UserName = "test",
                 Password = "test"
             };
-  
+
 
 
         [SetUp]
@@ -73,7 +74,7 @@ namespace AntimalnikAPI.Tests
         public void ThrowNullReferenceExceptionWhenMapperServiceIsNull()
         {
             _MockedMapper = null;
-            Assert.Throws<NullReferenceException>(() => new UserController( _MockedUserService.Object, _MockedMapper.Object));
+            Assert.Throws<NullReferenceException>(() => new UserController(_MockedUserService.Object, _MockedMapper.Object));
         }
 
         [Test]

@@ -1,31 +1,21 @@
-using AntimalnikAPI.Data;
+using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Models;
+using AntimalnikAPI.DAL.Repositories;
+using AntimalnikAPI.DAL.Repositories.Interfaces;
 using AntimalnikAPI.MappingConfiguration;
-using AntimalnikAPI.Models;
 using AntimalnikAPI.Services;
 using AntimalnikAPI.Services.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
-using MySql.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace AntimalnikAPI
 {
@@ -51,21 +41,22 @@ namespace AntimalnikAPI
 
             services.AddControllers();
 
-            services.AddControllers().AddNewtonsoftJson(options => 
+            services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AntimalnikDbContext>(options =>
                options.UseMySQL(
                    Configuration.GetConnectionString("HostedConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(o => {
+            services.AddDefaultIdentity<ApplicationUser>(o =>
+            {
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequiredLength = 6;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            })
+                .AddEntityFrameworkStores<AntimalnikDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddSwaggerGen(c =>
@@ -76,6 +67,11 @@ namespace AntimalnikAPI
             MapperConfiguration mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new ApplicationProfile()));
             services.AddSingleton(mapperConfig.CreateMapper());
 
+            //repositories
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+
+            //services
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMessageService, MessageService>();

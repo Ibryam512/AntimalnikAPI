@@ -1,6 +1,6 @@
-﻿using AntimalnikAPI.Data;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
+﻿using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Enums;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,9 +12,9 @@ namespace AntimalnikAPI.Services
 {
     public class MessageService : IMessageService
     {
-        private readonly ApplicationDbContext _context;
-        
-        public MessageService(ApplicationDbContext context)
+        private readonly AntimalnikDbContext _context;
+
+        public MessageService(AntimalnikDbContext context)
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
         }

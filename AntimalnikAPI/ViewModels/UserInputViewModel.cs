@@ -1,7 +1,3 @@
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
-using System.Collections.Generic;
-
 namespace AntimalnikAPI.ViewModels
 {
     public class UserInputViewModel

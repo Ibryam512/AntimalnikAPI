@@ -1,7 +1,7 @@
-﻿using AntimalnikAPI.Data;
-using AntimalnikAPI.Models;
-using AntimalnikAPI.ViewModels;
+﻿using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services.Interfaces;
+using AntimalnikAPI.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,11 +13,11 @@ namespace AntimalnikAPI.Services
 {
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AntimalnikDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserService(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public UserService(AntimalnikDbContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
             this._signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));

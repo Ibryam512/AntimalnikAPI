@@ -1,16 +1,13 @@
 using AntimalnikAPI.Controllers;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
+using AntimalnikAPI.DAL.Enums;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services.Interfaces;
 using AntimalnikAPI.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AntimalnikAPI.Tests
 {
@@ -22,24 +19,26 @@ namespace AntimalnikAPI.Tests
         private PostController _PostController;
 
         private PostInputViewModel samplePostView =>
-			new PostInputViewModel {
-				PostType = PostType.Ad,
+            new PostInputViewModel
+            {
+                PostType = PostType.Ad,
                 Title = "test",
                 Description = "test",
                 Price = 0.01,
                 UserName = "tester"
-			};
+            };
 
         private Post samplePost =>
-			new Post {
-				PostType = PostType.Ad,
+            new Post
+            {
+                PostType = PostType.Ad,
                 Title = "test",
                 Description = "test",
                 Price = 0.01,
                 DeleteDate = new DateTime(),
                 Image = "image.jpeg",
-                AddDate = new DateTime()
-			};  
+                CreationDate = new DateTime()
+            };
 
 
         [SetUp]

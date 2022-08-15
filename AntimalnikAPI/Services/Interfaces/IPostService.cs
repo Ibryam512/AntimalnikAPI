@@ -1,4 +1,4 @@
-﻿using AntimalnikAPI.Models;
+﻿using AntimalnikAPI.DAL.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

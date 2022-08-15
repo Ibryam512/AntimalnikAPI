@@ -1,7 +1,5 @@
-﻿using AntimalnikAPI.Models;
-using System;
+﻿using AntimalnikAPI.DAL.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AntimalnikAPI.Services.Interfaces

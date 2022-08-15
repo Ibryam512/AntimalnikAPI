@@ -1,33 +1,32 @@
-﻿using AntimalnikAPI.Data;
-using AntimalnikAPI.Models;
+﻿using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AntimalnikAPI.Services
 {
     public class PostService : IPostService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AntimalnikDbContext _context;
         private readonly IUserService _userService;
-		
-        public PostService(ApplicationDbContext context, IUserService userService)
+
+        public PostService(AntimalnikDbContext context, IUserService userService)
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
             this._userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
-		
-        public Task<List<Post>> GetPosts() => this._context.Posts.Include(post => post.User).ToListAsync();
 
-        public Task<Post> GetPost(string id) => this._context.Posts.Include(post => post.User).SingleOrDefaultAsync(x => x.Id == id);
+        public Task<List<Post>> GetPosts() => this._context.Posts.Include(post => post.Creator).ToListAsync();
+
+        public Task<Post> GetPost(string id) => this._context.Posts.Include(post => post.Creator).SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task AddPost(Post post)
         {
             this._context.Posts.Add(post);
-            this._userService.GetUser(post.User.UserName).Result.Posts.Add(post);
+            this._userService.GetUser(post.Creator.UserName).Result.Posts.Add(post);
             this._context.SaveChanges();
         }
 

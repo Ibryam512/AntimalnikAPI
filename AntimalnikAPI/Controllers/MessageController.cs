@@ -1,13 +1,8 @@
-using AntimalnikAPI.Data;
-using AntimalnikAPI.Models;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services.Interfaces;
 using AntimalnikAPI.ViewModels;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AntimalnikAPI.Controllers
 {
@@ -43,12 +38,12 @@ namespace AntimalnikAPI.Controllers
         {
             var sender = this._userService.GetUser(messageView.Sender).Result;
             var reciever = this._userService.GetUser(messageView.Reciever).Result;
-            var message = new Message 
+            var message = new Message
             {
                 Sender = sender,
                 Reciever = reciever,
                 Text = messageView.Text,
-                SentDate = DateTime.Now
+                CreationDate = DateTime.Now
             };
             this._service.SendMessage(message);
             return new JsonResult("The message is sent successfully.");
@@ -65,15 +60,15 @@ namespace AntimalnikAPI.Controllers
         public IActionResult SendQuestion(MessageInputViewModel messageView)
         {
             var sender = this._userService.GetUser(messageView.Sender).Result;
-            var message = new Message 
+            var message = new Message
             {
                 Sender = sender,
                 Text = messageView.Text,
-                SentDate = DateTime.Now
+                CreationDate = DateTime.Now
             };
             this._service.SendQuestion(message);
             return new JsonResult("The question is sent successfully.");
         }
-        
+
     }
 }

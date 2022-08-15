@@ -1,6 +1,6 @@
-using AntimalnikAPI.Data;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
+using AntimalnikAPI.DAL;
+using AntimalnikAPI.DAL.Enums;
+using AntimalnikAPI.DAL.Models;
 using AntimalnikAPI.Services;
 using AntimalnikAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,27 +15,28 @@ namespace AntimalnikAPI.Tests
     public class PostServiceShould
     {
         private Mock<IUserService> _MockedUserService;
-        private ApplicationDbContext _Context;
+        private AntimalnikDbContext _Context;
         private PostService _PostService;
 
         private Post samplePost =>
-			new Post {
-				PostType = PostType.Ad,
+            new Post
+            {
+                PostType = PostType.Ad,
                 Title = "test",
                 Description = "test",
                 Price = 0.01,
                 DeleteDate = new DateTime(),
                 Image = "image.jpeg",
-                AddDate = new DateTime()
-			};
+                CreationDate = new DateTime()
+            };
 
 
         [SetUp]
         public void Setup()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<AntimalnikDbContext>();
             optionsBuilder.UseInMemoryDatabase("Antimalnik");
-            _Context = new ApplicationDbContext(optionsBuilder.Options);
+            _Context = new AntimalnikDbContext(optionsBuilder.Options);
             _MockedUserService = new Mock<IUserService>();
             _PostService = new PostService(_Context, _MockedUserService.Object);
             _Context.Posts.Add(samplePost);

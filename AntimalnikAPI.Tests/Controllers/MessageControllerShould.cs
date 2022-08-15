@@ -1,16 +1,10 @@
 using AntimalnikAPI.Controllers;
-using AntimalnikAPI.Enums;
-using AntimalnikAPI.Models;
 using AntimalnikAPI.Services.Interfaces;
 using AntimalnikAPI.ViewModels;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AntimalnikAPI.Tests
 {
@@ -20,12 +14,13 @@ namespace AntimalnikAPI.Tests
         private Mock<IUserService> _MockedUserService;
         private MessageController _MessageController;
 
-       private MessageInputViewModel sampleMessageView =>
-			new MessageInputViewModel {
-				Sender = "test1",
-                Reciever = "test2",
-                Text = "test"
-			};
+        private MessageInputViewModel sampleMessageView =>
+             new MessageInputViewModel
+             {
+                 Sender = "test1",
+                 Reciever = "test2",
+                 Text = "test"
+             };
 
         [SetUp]
         public void Setup()
@@ -53,7 +48,7 @@ namespace AntimalnikAPI.Tests
         public void ThrowNullReferenceExceptionWhenUserServiceIsNull()
         {
             _MockedUserService = null;
-            Assert.Throws<NullReferenceException>(() => new MessageController( _MockedMessageService.Object, _MockedUserService.Object));
+            Assert.Throws<NullReferenceException>(() => new MessageController(_MockedMessageService.Object, _MockedUserService.Object));
         }
 
         [Test]
